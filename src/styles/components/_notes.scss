@@ -1,0 +1,95 @@
+
+.notes__main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: whitesmoke;
+}
+
+.notes__body-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+}
+
+.notes__appbar {
+    align-items: center;
+    background-color: $primary;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 0px 0px 20px;
+}
+
+.notes__graphic {
+    flex: 1;
+    height: 100%;
+    padding: 20px 40px 20px 20px;
+}
+
+.notes__content {
+    flex: 1;
+    height: 100%;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.notes_btn {
+    background-color: #5C62C5;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    border: 0;
+    color: white;
+    border-radius: 4px;
+    margin-top: 10px;
+    float: right;
+
+}
+
+.notes__title-input, .notes__textarea {
+    border: none;
+    
+    &:focus {
+        outline: none;
+    }
+}
+
+.notes__title-input {
+    color: $dark-grey;
+    font-size: 20px;
+    padding: 9px;
+    margin-bottom: 10px;
+    background-color: $white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.notes__textarea {
+    color: #363636;
+    font-size: 20px;
+    height: 70%;
+    width: 100%;
+    border-radius: 6px;
+    padding: 9px;
+    resize: none;
+}
+
+.notes__image {
+    align-self: self-end;
+    border-radius: 3%;
+    padding-top: 9px;
+}
+
+img {
+    border-radius: 3%;
+}
+
+@media screen and (max-width: 1023px) {
+    .notes_btn {
+        align-content: center;
+    
+    }
+}
