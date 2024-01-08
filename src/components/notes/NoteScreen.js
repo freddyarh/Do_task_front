@@ -6,13 +6,14 @@ import Swal from 'sweetalert2';
 
 export const NoteScreen = () => {
 
-    const baseURL = "http://localhost:3000/journal";
+    const baseURL = "http://localhost:3000/journal/";
 
     const id = useSelector( state => state.auth.uid);
 
     const [lastEntry, setLastEntry] = useState(null);
 
     const [inputs, setInputs] = useState({
+        id: "",
         title: "",
         description: "",
     });
@@ -25,7 +26,7 @@ export const NoteScreen = () => {
         return await axios.get(`${ baseURL }/lastEntry`)
             .then(function (res) {
             setLastEntry(res.data.lastEntry);
-            setInputs( val => ({ ...val, title: res.data.lastEntry[0].title, description:res.data.lastEntry[0].description }));
+            setInputs( val => ({ ...val, id: res.data.lastEntry[0]._id, title: res.data.lastEntry[0].title, description:res.data.lastEntry[0].description }));
             
         })
         .catch(function (error) {
@@ -33,14 +34,9 @@ export const NoteScreen = () => {
         })
     };
 
-    const handleUpdateLastEntry = () => {
-        
-        const data = new FormData();
-        data.append("title", inputs.title);
-        data.append("description", inputs.description);
-        
-        axios
-            .put(`${ baseURL }/updateLastEntry/${ id }`, data, { "Content-Type": "multipart/form-data" })
+    const handleUpdateLastEntry = async() => {
+
+        axios.put(`${ baseURL }/updateLastEntry/${ inputs.id }`, { title: inputs.title, description: inputs.description })
             .then((response) => {
                 console.log(response)
             Swal.fire(
@@ -48,16 +44,17 @@ export const NoteScreen = () => {
                 response.data.msj,
                 'success'
             )
-            });
-        };
+            })
+            .catch( err => console.log(err) )
+    };
 
-        const handleInputChange = (event) => {
+    const handleInputChange = (event) => {
 
-            const name = event.target.name;
-            const value = event.target.value;
-        
-            setInputs(values => ({ ...values, [name]: value }));
-          }
+        const name = event.target.name;
+        const value = event.target.value;
+    
+        setInputs(values => ({ ...values, [name]: value }));
+    }
 
     if(!lastEntry) return null;
     
@@ -68,6 +65,7 @@ export const NoteScreen = () => {
             <div className="notes__body-content">
                 <div className="notes__graphic">
                     <h2>Daily summary </h2>
+                    <h3 style={{ marginTop: "12px" }}>Title</h3>
                     <input 
                         className="notes__title-input"
                         name={ "title" }
@@ -77,6 +75,7 @@ export const NoteScreen = () => {
                         onChange={ handleInputChange }
                     />
 
+                    <h3 style={{ marginTop: "12px" }}>Description</h3>
                     <textarea
                         className="notes__textarea"
                         name={ "description"}
@@ -84,11 +83,9 @@ export const NoteScreen = () => {
                         value={ inputs.description }
                         onChange={ handleInputChange }
                     ></textarea>
-
-                    <button className="notes_btn" onClick={ handleUpdateLastEntry }>
+                    <button className="notes__btn" onClick={ handleUpdateLastEntry }>
                         Update
                     </button>
-
                 </div>
                 <div className="notes__content">
 
@@ -97,6 +94,7 @@ export const NoteScreen = () => {
                     <div className="notes__image">
                         <img 
                             style={{ width: '35%' }}
+                            // src={`${ baseURL }/entriesImageFile/asdasd`}
                             src={`${ baseURL }/entriesImageFile/${lastEntry[0].image}`}
                             alt="imgen"
                         />

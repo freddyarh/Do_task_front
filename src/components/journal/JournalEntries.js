@@ -45,8 +45,8 @@ export const JournalEntries = ({ getData }) => {
                 </div>
                 
                 <div className="journal__entry-date-box">
-                    <span></span>
-                    <h4></h4>
+                    <span>dfg</span>
+                    <h4>dfg</h4>
                 </div>
                 
             </div>
